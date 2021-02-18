@@ -9,7 +9,7 @@ After that, one thread is created for each chunk of data, which performs the sea
 
 The parent thread then combines the results, prints them on the console, and terminates.
 
-[NOTE: Search array and search item initialization has been randomized because we are focused on the parallelization of the search, and so user input is not necessary in this case.]
+[NOTE: Search array and search item initialization has been randomized because we are focused on the parallelization of the search, and so user input is not necessary in this case. This initialization constitutes the "Problem Formation Time". The following execution of the search via threads constitutes the "Thread execution time".]
 
 -
 
