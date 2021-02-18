@@ -1,0 +1,24 @@
+Program Description:
+
+
+The program takes two inputs from the command line: threads_count and searchspace_size, in that order. threads_count tells how many threads will be created. searchspace_size tells how large the array to search is.
+
+The program creates an array of the specified size, initializes the array randomly, sets the item to search for randomly and divides the array into chunks to process thread-wise.
+
+After that, one thread is created for each chunk of data, which performs the search and returns its result to the calling thread, which is blocked till all child threads finish executing.
+
+The parent thread then combines the results, prints them on the console, and terminates.
+
+[NOTE: Search array and search item initialization has been randomized because we are focused on the parallelization of the search, and so user input is not necessary in this case.]
+
+-
+
+Program Execution:
+
+1) Open Linux Terminal
+
+2) Compile program by running "g++ -pthread -o Main.out Main.cpp"
+
+3) Run program by "./Main.out [number_of_threads] [size of data array]", for example: "./Main.out 25 50000" (default values are 1 and 1 million)
+
+4) To view performance statistics, re-compile program with "g++ -pthread -pg -o Main.out Main.cpp", then run the program as you would in step 3, and finally run "gprog Main.out". The performance statistics will be printed on the terminal.

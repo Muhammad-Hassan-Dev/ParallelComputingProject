@@ -63,13 +63,13 @@ int main(int argc, char *argv[])
 
 	if(searchspace_size < threads_count) //Must be not more than one thread for each element in array
 	{
-		cout <<"Threads Count must be greater than or same as Search Space size. Setting Threads Count = Search Space size."<<endl;
+		cout <<"Threads Count must be lesser than or same as Search Space size. Setting Threads Count = Search Space size."<<endl;
 		threads_count = searchspace_size;
 	}
 
 	SearchTask * search_tasks = GetRandomSearchTasks(threads_count, searchspace_size); //Get a random search problem in chunks
  
-	LeadSearch(search_tasks, threads_count); //This will perform the search on each chunk in an individual thread and cumulate and print the result
+	LeadSearch(search_tasks, threads_count); //This will perform the search on each chunk in an individual thread and accumulate and print the result
 
 	pthread_exit(NULL);
 }

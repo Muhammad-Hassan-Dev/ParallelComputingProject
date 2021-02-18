@@ -14,7 +14,7 @@ void* SearchChunk(void* searchtask)
 			count ++;
 	}
 
-	((SearchTask*) searchtask)->Occurrence_Count = count;
+	((SearchTask*) searchtask)->Occurrence_Count = count; //set the result of this chunk before exiting thread
 
 	pthread_exit(NULL);
 }
