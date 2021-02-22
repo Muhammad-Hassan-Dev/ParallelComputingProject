@@ -1,6 +1,4 @@
-#include "SearchProblemSetup.cpp"
 #include "SearchChunk.cpp"
-#include <pthread.h>
 
 void LeadSearch(SearchTask * tasks, int threads_count)
 {
@@ -24,7 +22,7 @@ void LeadSearch(SearchTask * tasks, int threads_count)
 		pthread_join(thread_ids[i], NULL);
 	}
 
-	int total_occurrences = 0;
+	long total_occurrences = 0;
 
 	for(int i=0;i<threads_count;i++)
 	{
@@ -38,16 +36,19 @@ void LeadSearch(SearchTask * tasks, int threads_count)
 
 int main(int argc, char *argv[])
 {
-	cout << endl << "DESCRIPTION: This program takes the threads count and search space size parameters given on the command line. It generates a random search space, a random number to search, divides the search space into problem chunks, searches chunks via threads, and consolidates and prints the number of times the random search number occurred in the random search space."<<endl <<endl;
+	cout << endl << "DESCRIPTION: This program takes the threads count, search space size, and search item parameters given on the command line. It generates a random array of given size, divides the array into chunks (one for each thread), searches chunks through given number of threads for the given search item, and consolidates and prints the number of times the given search number occurs in the random array."<<endl <<endl;
 
 	//Command Line parameters
 	int threads_count = 0; //number of threads to create
-	int searchspace_size = 0; //size of array to search in
+	long searchspace_size = 0; //size of array to search in
+	int search_item = 0; //the item to search for in the array
 
 	if(argc>1)
 		threads_count = atoi(argv[1]);
 	if(argc>2)
-		searchspace_size = atoi(argv[2]);
+		searchspace_size = atol(argv[2]);
+	if(argc>3)
+		search_item = atoi(argv[3]);
 
 	if(threads_count <= 0)
 	{
@@ -67,9 +68,20 @@ int main(int argc, char *argv[])
 		threads_count = searchspace_size;
 	}
 
-	SearchTask * search_tasks = GetRandomSearchTasks(threads_count, searchspace_size); //Get a random search problem in chunks
+	if(search_item == 0)
+	{
+		cout << "Search Item cannot be zero, since it is used in modulus operation to initialize search array. Randomizing search item to fall between 1 to 10."<<endl;
+		srand(time(NULL));
+		search_item = rand() % 10 + 1;
+	}
+
+	SearchTask * search_tasks = GetRandomSearchTasks(threads_count, searchspace_size, search_item); //Get a random search problem in chunks
  
+	cout << "Successfully initialized search array."<<endl;
+
 	LeadSearch(search_tasks, threads_count); //This will perform the search on each chunk in an individual thread and accumulate and print the result
+
+	cout << "Search Complete. Exitting program."<<endl;
 
 	pthread_exit(NULL);
 }
