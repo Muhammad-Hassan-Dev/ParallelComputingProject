@@ -18,8 +18,15 @@ Program Execution:
 
 1) Open Linux Terminal
 
-2) Compile program by running "g++ -pthread -o Main.out Main.cpp"
+2) Navigate to ParallelComputingProject directory root
 
-3) Run program by "./Main.out [number_of_threads] [size_of_data_array] [search_item]", for example: "./Main.out 25 50000 5" (default values are 1, 1 million, and a random number between 1 to 10)
+3) mkdir build
 
-4) To view performance statistics, re-compile program with "g++ -pthread -pg -o Main.out Main.cpp", then run the program as you would in step 3, and finally run "gprof Main.out gmon.out". The performance statistics will be printed on the terminal.
+4) cd build
+
+5) cmake ../Src
+
+6) cmake --build .
+
+7) ./Main.out [number_of_threads] [size_of_data_array] [search_item] 
+(for example: "./Main.out 25 50000 5"; default values are 1, 1 million, and a random number between 1 to 10)
